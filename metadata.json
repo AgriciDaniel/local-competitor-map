@@ -1,0 +1,7 @@
+{
+  "name": "Local Competitor Map",
+  "description": "AI-powered local-competitor intelligence on a photorealistic Google 3D map. Ask in plain English and see who competes with any business, plotted as pins with ratings and reviews.",
+  "requestFramePermissions": [],
+  "prompt": "",
+  "majorCapabilities": []
+}

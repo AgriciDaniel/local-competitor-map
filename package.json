@@ -1,0 +1,52 @@
+{
+  "name": "local-competitor-map",
+  "version": "0.1.0",
+  "private": false,
+  "type": "module",
+  "description": "AI-powered local-competitor intelligence on a photorealistic Google 3D map. Ask in plain English and see who competes with any business, plotted as pins with ratings and reviews.",
+  "keywords": [
+    "google-maps",
+    "3d-maps",
+    "photorealistic-3d",
+    "gemini",
+    "places-api",
+    "local-seo",
+    "competitor-analysis",
+    "model-context-protocol",
+    "mcp",
+    "lit",
+    "vite",
+    "typescript"
+  ],
+  "license": "Apache-2.0",
+  "author": "Daniel Agrici",
+  "homepage": "https://github.com/AgriciDaniel/local-competitor-map#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AgriciDaniel/local-competitor-map.git"
+  },
+  "bugs": {
+    "url": "https://github.com/AgriciDaniel/local-competitor-map/issues"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@google/genai": "1.30.0",
+    "@googlemaps/js-api-loader": "1.16.10",
+    "@modelcontextprotocol/sdk": "1.22.0",
+    "highlight.js": "11.11.1",
+    "lit": "3.3.2",
+    "marked": "15.0.12",
+    "marked-highlight": "2.2.3",
+    "zod": "3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.0",
+    "typescript": "~5.8.2",
+    "vite": "^6.2.0"
+  }
+}

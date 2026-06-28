@@ -1,0 +1,1246 @@
+/**
+ * This CSS file provides all the global styling for the application.
+ * It includes:
+ * - Basic resets and box-sizing.
+ * - Font imports and global font settings.
+ * - CSS variables for theming (light/dark mode colors, accents, etc.).
+ * - Scrollbar styling.
+ * - Layout styles for the main application structure (gdm-map-app, sidebar, map container).
+ * - Styling for UI components like tabs, buttons, input fields, chat messages,
+ *   and the code editor.
+ * - Responsive design adjustments for smaller screens.
+ * - Syntax highlighting theme for code blocks (StackOverflow Dark).
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  height: 100%;
+  display: flex;
+  font-family: 'Google Sans Text', 'Google Sans';
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  margin: 0;
+  overflow: hidden;
+
+  --color-bg: light-dark(#fff, #000);
+  --color-text: light-dark(#000, #fff);
+
+  --color-inv-bg: light-dark(#000, #fff);
+  --color-inv-text: light-dark(#fff, #000);
+  --color-inv-bg2: light-dark(#333, #aaa);
+  --color-inv-text2: light-dark(#ccc, #222);
+
+  --color-accent: light-dark(#000, #fff);
+  --color-accent2: light-dark(#444, #ccc);
+  --color-accent-disabled: light-dark(#aaa, #aaa);
+  --color-accent-text: light-dark(#fff, #000);
+  --color-sidebar-border: light-dark(#ddd, #333);
+
+  --color-bg2: light-dark(#f0f0f0, #333);
+  --color-text2: light-dark(#333, #f0f0f0);
+  --color-bg3: light-dark(#dadada, #4b4b4b);
+  --color-text3: light-dark(#333, #f0f0f0);
+
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: light-dark(rgba(170, 170, 170, 0.7), rgba(130, 130, 130, 0.7));
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+
+  --code-bg: #222;
+  --code-text: #ccc;
+
+  --code-editor-bg: var(--color-bg2);
+  --code-editor-text: var(--color-text2);
+
+  --color-error-bg: #ff3326;
+  --color-error-text: #000;
+}
+
+.gdm-map-app { /* Updated from .playground */
+  border-top: 1px solid var(--color-sidebar-border);
+}
+
+
+textarea {
+  border: none;
+  overflow: auto;
+  outline: none;
+
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+
+  resize: none;
+}
+
+.hidden {
+  display: none!important;
+}
+
+#editor textarea {
+  font: monospace;
+}
+
+#root,
+.gdm-map-app { /* Updated from .playground */
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Default layout: Wide screens (chat left, map right) */
+.gdm-map-app { /* Updated from .playground */
+  display: flex;
+  flex-direction: row-reverse; /* Chat (last in HTML) left, Map (first in HTML) right */
+  flex: 1;
+  border-top: none; /* Remove top border as layout changes */
+}
+
+.sidebar { /* Chat area */
+  display: flex;
+  flex-direction: column;
+  width: 35%; /* Chat panel width */
+  min-width: 300px;
+  max-width: 450px;
+  height: 100vh; /* Full height */
+  overflow: hidden;
+  /* border-right is now between chat (left) and map (right) due to row-reverse */
+  border-right: 1px solid var(--color-sidebar-border, #ddd);
+  flex-shrink: 0; /* Prevent sidebar from shrinking */
+}
+
+
+.selector {
+  display: flex;
+  flex-direction: row;
+  flex: 0;
+  padding: 0 1em;
+  border-bottom: 1px solid var(--color-sidebar-border, #ddd);
+  flex-shrink: 0; /* Prevent selector from shrinking */
+}
+
+.selector button {
+  display: flex;
+  gap: 5px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  border-bottom: 4px solid transparent;
+  background: transparent;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  color: var(--color-text);
+}
+
+.selector button:hover {
+  background-color: var(--color-bg2);
+  color: var(--color-text2);
+}
+
+.selected-tab, .selector button.active {
+  background: transparent;
+  border-bottom: 4px solid var(--color-accent, #000) !important;
+}
+
+.tabcontent {
+  display: none;
+}
+
+.showtab { /* This is #chat-panel when active */
+  display: flex!important;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+}
+
+.toolbar {
+  height: 80px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  border-top: 1px solid var(--color-sidebar-border, #ddd);
+}
+
+.toolbar button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 10px 5px 6px 5px;
+  transition: 0.3s;
+  background: transparent;
+  color: var(--color-accent);
+}
+
+.toolbar button:hover {
+  background-color: transparent;
+  color: var(--color-accent2);
+}
+
+.toolbar button.disabled {
+  color: var(--color-accent-disabled);
+}
+
+#chat { /* Container for messages and input area within sidebar */
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.footer { /* Groups chat status and input area */
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+
+
+textarea {
+  flex: 1;
+  min-height: 30px;
+  height: 100px;
+  width: 100%;
+}
+
+.main-container { /* This now primarily holds the map */
+  display: flex;
+  flex: 1; /* Map takes remaining width */
+  height: 100vh; /* Full height */
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+#mapContainer {
+  flex-grow: 1;
+  height: 100%;
+  width: 100%;
+  background-color: #e0e0e0;
+}
+
+.map-error-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0,0,0,0.7);
+  color: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  z-index: 1000;
+}
+
+
+main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+}
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25em;
+  padding: 8px;
+  scroll-behavior: smooth;
+  padding-top: 1.5em;
+
+  * {
+  overflow-anchor: none;
+  }
+}
+
+#chatStatus {
+  background: var(--color-bg2, #f0f0f0);
+  padding: 0.5em 1em; /* Adjusted padding */
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  align-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  font-weight: bold;
+  font-size: 0.9em;
+  border-top: 1px solid var(--color-sidebar-border);
+  flex-shrink: 0; /* Ensure it doesn't shrink */
+}
+
+#chatStatus svg {
+  margin-right: 10px;
+}
+
+@-webkit-keyframes rotating {
+  from {
+  -webkit-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+  }
+  to {
+  -webkit-transform: rotate(360deg);
+  -o-transform: rotate(360deg);
+  transform: rotate(360deg);
+  }
+}
+@keyframes rotating {
+  from {
+  -ms-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -webkit-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+  }
+  to {
+  -ms-transform: rotate(360deg);
+  -moz-transform: rotate(360deg);
+  -webkit-transform: rotate(360deg);
+  -o-transform: rotate(360deg);
+  transform: rotate(360deg);
+  }
+}
+.rotating {
+  -webkit-animation: rotating 1s linear infinite;
+  -moz-animation: rotating 1s linear infinite;
+  -ms-animation: rotating 1s linear infinite;
+  -o-animation: rotating 1s linear infinite;
+  animation: rotating 1s linear infinite;
+}
+
+
+#inputArea {
+  display: flex;
+  align-items: center; /* Vertically center items in input area */
+  padding: 10px 15px; /* Adjusted padding */
+  border-top: 1px solid var(--color-sidebar-border);
+  height: auto; /* Allow height to adjust to content, min-height if needed */
+  min-height: 60px; /* Ensure a minimum height */
+  flex-shrink: 0;
+}
+
+#messageInput {
+  flex-grow: 1;
+  padding: 10px 16px; /* Consistent padding */
+  border: 1px solid var(--color-sidebar-border); /* Use sidebar border color */
+  border-radius: 20px; /* More rounded */
+  margin-right: 10px;
+  font-size: 1em;
+  background: var(--color-bg2);
+  color: var(--color-text2);
+  line-height: 1.4; /* Improve text readability */
+  height: auto; /* Adjust to content */
+  min-height: 40px; /* Ensure it's tall enough */
+}
+
+#messageInput:focus{
+  outline: none;
+  border-color: var(--color-accent); /* Single, subtle focus treatment */
+  box-shadow: 0 0 0 3px rgba(128, 128, 128, 0.18);
+}
+
+#sendButton {
+  padding: 0; /* Remove padding, use width/height for sizing */
+  width: 40px; /* Explicit width */
+  height: 40px; /* Explicit height */
+  background-color: var(--color-accent, inherit);
+  color: var(--color-accent-text, inherit);
+  border: none;
+  border-radius: 50%; /* Make it a circle */
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center; /* Center icon */
+  justify-content: center; /* Center icon */
+  flex-shrink: 0; /* Prevent shrinking */
+}
+
+#sendButton svg { /* Adjust icon size if needed */
+  width: 24px;
+  height: 24px;
+}
+
+
+#sendButton:hover {
+  background-color: var(--color-accent2, #ddd);
+}
+
+#sendButton.disabled {
+  background-color: var(--color-accent-disabled, #ccc);
+  cursor: not-allowed;
+}
+
+
+#anchor {
+  overflow-anchor: auto;
+  padding-top: 45px;
+  height: 1px;
+}
+
+
+#editor {
+  position: relative;
+  overflow: auto;
+  background-color: #1c1b1b;
+
+  flex-direction: column;
+  flex: 1;
+
+  header {
+    flex: 0;
+  }
+
+  .code-container {
+    width: max-content;
+    position: relative;
+  }
+
+  .code-syntax,
+  .code-editor {
+    flex: 1 1 100%;
+    white-space: pre;
+
+    font-family: monospace;
+    font-feature-settings: normal;
+    font-kerning: auto;
+    font-optical-sizing: auto;
+    font-palette: normal;
+    font-size: 14px;
+    font-size-adjust: none;
+    font-stretch: 100%;
+    font-style: normal;
+    font-synthesis-small-caps: auto;
+    font-synthesis-style: auto;
+    font-synthesis-weight: auto;
+    font-variant-alternates: normal;
+    font-variant-caps: normal;
+    font-variant-east-asian: normal;
+    font-variant-emoji: normal;
+    font-variant-ligatures: normal;
+    font-variant-numeric: normal;
+    font-variant-position: normal;
+    font-variation-settings: normal;
+    font-weight: 400;
+    -webkit-font-smoothing: auto;
+  }
+  .code-syntax {
+    pointer-events: none;
+  }
+  .code-editor {
+    background: transparent;
+    color: transparent;
+    caret-color: var(--code-text);
+
+    display: flex;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+;
+    flex: 1;
+    overflow: hidden;
+    width: -webkit-fill-available;
+    height: -webkit-fill-available;
+  }
+}
+
+
+.turn {
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  padding: 10px 15px;
+  border-radius: 18px;
+  max-width: 85%;
+  word-wrap: break-word;
+
+  .thinking {
+    font-style: normal;
+    background: var(--color-bg3);
+    color: var(--color-text3);
+    border-radius: 10px;
+    padding: 0.75em;
+    margin-top: 6px;
+
+    p {
+      margin: 0.75rem 0;
+    }
+  }
+}
+
+
+.role-user {
+    background-color: var(--color-accent);
+    color: var(--color-accent-text);
+    align-self: flex-end;
+    border-bottom-right-radius: 4px;
+
+    details {
+      display: none;
+    }
+}
+
+.role-assistant {
+    background-color: var(--color-bg2);
+    color: var(--color-text2);
+    align-self: flex-start;
+    border-bottom-left-radius: 4px;
+}
+
+.role-system-ask {
+  background-color: transparent;
+  color: var(--color-text2);
+  border: 1px solid var(--color-text2, #333);
+  align-self: flex-end;
+  border-bottom-right-radius: 4px;
+
+  details {
+    display: none;
+  }
+}
+
+.role-error {
+  background-color: var(--color-error-bg);
+  color: var(--color-error-text);
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+
+  details {
+    display: none;
+  }
+}
+
+.role-system {
+  background-color: var(--color-bg2);
+  color: var(--color-text2);
+  align-self: flex-start;
+  border: 1px solid var(--color-sidebar-border);
+  border-bottom-left-radius: 4px;
+
+  details {
+    display: none;
+  }
+}
+
+canvas {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain;
+}
+
+
+/* Markdown */
+
+.turn > .text p, .turn > .text div {
+  font-size: 1rem;
+  margin-bottom: 1.3rem;
+}
+.turn > .text p:nth-last-child(1), .turn > .text div:nth-last-child(1) {
+  margin-bottom: 0;
+}
+
+.turn > .text {
+  line-height: 1.5;
+
+  li {
+    margin-left: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  li:nth-last-child(1) {
+    margin-bottom: 0;
+  }
+
+  pre,
+  code {
+    background-color: var(--code-bg);
+    box-sizing: content-box;
+    color: var(--code-text);;
+    border-radius: 4px;
+    padding: 0 5px;
+    outline: 3px solid var(--code-bg);
+    outline-offset: -1px;
+    font-family: "Inconsolata", "Courier New", monospace;
+  }
+
+  pre {
+    overflow: auto;
+    border-radius: 10px;
+    padding: 15px;
+    margin-top: 0.5em;
+  }
+
+}
+
+#editor textarea {
+  background-color: var(--code-editor-bg);
+  color: var(--code-editor-text);
+  padding: 14px;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+
+}
+
+.button-label {
+  position: relative;
+}
+
+.button-tooltip {
+  position: relative;
+  top: -85px;
+  height: 0;
+  width: 0;
+  pointer-events: none;
+  cursor: default;
+  overflow: visible;
+  transition: 0.2s;
+  opacity: 0;
+
+  p {
+    background: var(--color-inv-bg);
+    color: var(--color-inv-text);
+    border-radius: 4px;
+    padding: 5px 8px;
+    font-size: 16px;
+    width: max-content;
+    transform: translate(calc(-50% + 20px), 0);
+    outline: 1px solid rgba(255, 255, 255, 0.5);
+  }
+}
+
+.show-tooltip {
+  opacity: 1.0;
+}
+
+.turn button {
+  background: var(--color-accent);
+  color: var(--color-accent-text);
+  box-shadow: none;
+  border: none;
+  border-radius: 16px;
+  padding: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+
+.turn button:hover {
+  background-color: var(--color-accent2);
+}
+
+.turn button.disabled {
+  color: var(--color-accent-disabled);
+}
+
+#appMessages {
+  display: flex;
+  position: absolute;
+  bottom: 70px;
+  width: 100%;
+  flex-direction: column-reverse;
+  flex-wrap: nowrap;
+  align-content: center;
+  align-items: center;
+}
+
+
+/* Narrow screen layout: Map top, Chat bottom */
+@media only screen and (max-width : 900px) {
+  .gdm-map-app {
+    flex-direction: column; /* Map on top of Chat (HTML order is map, then chat) */
+    border-top: 1px solid var(--color-sidebar-border); /* Restore top border */
+  }
+
+  .main-container {
+    flex: 0 0 42%; /* Map takes a smaller share so the chat gets more room */
+    width: 100%; /* Full width */
+    height: auto; /* Let flex-basis control height */
+  }
+
+  .sidebar {
+    flex: 1; /* Chat area takes remaining height */
+    width: 100%; /* Full width */
+    max-width: none;
+    min-width: auto;
+    height: auto; /* Let flex-basis control height */
+    border-right: none; /* Remove right border, as it's full width now */
+    border-top: 1px solid var(--color-sidebar-border, #ddd); /* Border between map and chat */
+  }
+
+  .selector {
+    /* Keep the Gemini/Settings tabs reachable on mobile (was display:none when
+       there was only one tab). Full-width, compact tabs. */
+    flex-shrink: 0;
+    padding: 0 0.5em;
+  }
+  .selector button {
+    flex: 1;
+    padding: 10px 8px;
+  }
+
+  /* Cap the in-chat list to the shorter mobile panel (avoids nested scroll). */
+  .chat-competitors {
+    max-height: 42vh;
+  }
+
+  .toolbar {
+    border-bottom: 1px solid var(--color-sidebar-border, #ddd);
+  }
+
+  #inputArea {
+    padding: 8px 10px;
+    min-height: 50px;
+  }
+  #messageInput {
+    padding: 8px 12px;
+    min-height: 36px;
+  }
+  #sendButton {
+    width: 36px;
+    height: 36px;
+  }
+  #sendButton svg {
+    width: 20px;
+    height: 20px;
+  }
+
+}
+
+
+/**
+ * Code Syntax Highlighting
+ *****************************************************************************/
+
+ pre code.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 1em
+}
+code.hljs {
+  padding: 3px 5px
+}
+/*!
+  Theme: StackOverflow Dark
+  Description: Dark theme as used on stackoverflow.com
+  Author: stackoverflow.com
+  Maintainer: @Hirse
+  Website: https://github.com/StackExchange/Stacks
+  License: MIT
+  Updated: 2021-05-15
+
+  Updated for @stackoverflow/stacks v0.64.0
+  Code Blocks: /blob/v0.64.0/lib/css/components/_stacks-code-blocks.less
+  Colors: /blob/v0.64.0/lib/css/exports/_stacks-constants-colors.less
+*/
+.hljs {
+  /* var(--highlight-color) */
+  color: #fff;
+  /* var(--highlight-bg) */
+  background: #1c1b1b
+}
+.hljs-subst {
+  /* var(--highlight-color) */
+  color: #fff
+}
+.hljs-comment {
+  /* var(--highlight-comment) */
+  color: #999
+}
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-meta .hljs-keyword,
+.hljs-doctag,
+.hljs-section {
+  /* var(--highlight-keyword) */
+  color: #88aece
+}
+.hljs-attr {
+  /* var(--highlight-attribute); */
+  color: #88aece
+}
+.hljs-attribute {
+  /* var(--highlight-symbol) */
+  color: #c59bc1
+}
+.hljs-name,
+.hljs-type,
+.hljs-number,
+.hljs-selector-id,
+.hljs-quote,
+.hljs-template-tag {
+  /* var(--highlight-namespace) */
+  color: #f08d49
+}
+.hljs-selector-class {
+  /* var(--highlight-keyword) */
+  color: #88aece
+}
+.hljs-string,
+.hljs-regexp,
+.hljs-symbol,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-link,
+.hljs-selector-attr {
+  /* var(--highlight-variable) */
+  color: #b5bd68
+}
+.hljs-meta,
+.hljs-selector-pseudo {
+  /* var(--highlight-keyword) */
+  color: #88aece
+}
+.hljs-built_in,
+.hljs-title,
+.hljs-literal {
+  /* var(--highlight-literal) */
+  color: #f08d49
+}
+.hljs-bullet,
+.hljs-code {
+  /* var(--highlight-punctuation) */
+  color: #ccc
+}
+.hljs-meta .hljs-string {
+  /* var(--highlight-variable) */
+  color: #b5bd68
+}
+.hljs-deletion {
+  /* var(--highlight-deletion) */
+  color: #de7176
+}
+.hljs-addition {
+  /* var(--highlight-addition) */
+  color: #76c490
+}
+.hljs-emphasis {
+  font-style: italic
+}
+.hljs-strong {
+  font-weight: bold
+}
+.hljs-formula,
+.hljs-operator,
+.hljs-params,
+.hljs-property,
+.hljs-punctuation,
+.hljs-tag {
+  /* purposely ignored */
+
+}
+
+
+/* ---------------------------------------------------------------------------
+ * Local Competitor Map: settings form, competitor list, and detail card.
+ * ------------------------------------------------------------------------- */
+
+/* Settings tab form */
+.settings-form {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px;
+  overflow-y: auto;
+}
+
+.settings-form h3 {
+  margin: 14px 0 2px;
+  font-size: 0.95rem;
+}
+
+.settings-form h3:first-child {
+  margin-top: 0;
+}
+
+.settings-form label {
+  font-size: 0.8rem;
+  color: var(--color-text2);
+}
+
+.settings-form input {
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--color-sidebar-border);
+  background: var(--color-bg);
+  color: var(--color-text);
+  outline: none;
+  font-size: 0.9rem;
+}
+
+.settings-form input:focus {
+  border-color: var(--color-accent);
+}
+
+.settings-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.settings-form .save-btn {
+  padding: 8px 20px;
+  border: none;
+  border-radius: 6px;
+  background: var(--color-accent);
+  color: var(--color-accent-text);
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.settings-form .save-btn:hover {
+  background: var(--color-accent2);
+}
+
+.settings-form .saved-note {
+  color: #2e7d32;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.settings-form .settings-hint {
+  margin-top: 14px;
+  font-size: 0.75rem;
+  color: var(--color-text2);
+  line-height: 1.4;
+}
+
+.settings-form .settings-hint code {
+  background: var(--color-bg2);
+  padding: 1px 4px;
+  border-radius: 4px;
+}
+
+/* Loading pill over the map */
+.competitor-loading {
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1100;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.78);
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.competitor-loading svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Map declutter control (top-right over the map) */
+.map-controls {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 1055;
+  display: flex;
+  gap: 8px;
+}
+
+.map-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border: 1px solid var(--color-sidebar-border);
+  border-radius: 20px;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  white-space: nowrap;
+}
+
+.map-toggle:hover {
+  background: var(--color-bg2);
+}
+
+.map-toggle.active {
+  background: var(--color-accent);
+  color: var(--color-accent-text);
+  border-color: var(--color-accent);
+}
+
+/* Ranked competitor list panel (top-left over the map) */
+/* In-chat competitor results list (lives in the conversation, not over the map) */
+.chat-competitors {
+  align-self: stretch;
+  /* Prevent the surrounding flex column from squishing this scroll container to
+     ~0 height (which hid the list on short/mobile layouts). */
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--color-sidebar-border);
+  border-radius: 10px;
+  overflow: hidden;
+  overflow-y: auto;
+  max-height: 60vh;
+  background: var(--color-bg);
+}
+
+.chat-competitors-head {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: var(--color-bg2);
+  border-bottom: 1px solid var(--color-sidebar-border);
+}
+
+.cc-title {
+  flex: 1;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--color-text2);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.competitor-close {
+  border: none;
+  background: transparent;
+  color: var(--color-text2);
+  cursor: pointer;
+  font-size: 0.9rem;
+  line-height: 1;
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+
+.competitor-close:hover {
+  background: var(--color-bg2);
+  color: var(--color-text);
+}
+
+.competitor-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  text-align: left;
+  border: none;
+  border-bottom: 1px solid var(--color-sidebar-border);
+  background: transparent;
+  color: var(--color-text);
+  cursor: pointer;
+  padding: 9px 12px;
+}
+
+.competitor-row .pin-hint {
+  flex-shrink: 0;
+  opacity: 0;
+  font-size: 0.85rem;
+  transition: opacity 0.15s;
+}
+
+.competitor-row:hover .pin-hint,
+.competitor-row.selected .pin-hint {
+  opacity: 0.85;
+}
+
+.competitor-row:hover {
+  background: var(--color-bg2);
+}
+
+.competitor-row.selected {
+  background: var(--color-bg3);
+}
+
+.competitor-row.is-client {
+  background: rgba(255, 193, 7, 0.16);
+}
+
+.competitor-row .rank {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--color-bg2);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.competitor-row.is-client .rank {
+  background: #ffc107;
+  color: #000;
+}
+
+.competitor-row .cinfo {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.competitor-row .cname {
+  font-size: 0.88rem;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.competitor-row .cmeta {
+  font-size: 0.74rem;
+  color: var(--color-text2);
+}
+
+/* Maps-style detail card (bottom-left over the map) */
+.competitor-card {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  z-index: 1060;
+  width: 320px;
+  max-width: calc(100% - 32px);
+  padding: 16px 18px;
+  background: var(--color-bg);
+  color: var(--color-text);
+  border: 1px solid var(--color-sidebar-border);
+  border-radius: 12px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.3);
+}
+
+.competitor-card .card-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.competitor-card h3 {
+  margin: 0 24px 8px 0;
+  font-size: 1.05rem;
+}
+
+.competitor-card .rating-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.competitor-card .stars {
+  color: #f5a623;
+  font-weight: 700;
+}
+
+.competitor-card .reviews {
+  font-size: 0.82rem;
+  color: var(--color-text2);
+}
+
+.competitor-card .rank-badge {
+  font-size: 0.72rem;
+  font-weight: 600;
+  background: var(--color-bg2);
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+.competitor-card .card-cat,
+.competitor-card .card-addr,
+.competitor-card .card-phone {
+  font-size: 0.84rem;
+  color: var(--color-text2);
+  margin-bottom: 4px;
+}
+
+.competitor-card .card-photo {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.competitor-card .card-hours {
+  font-size: 0.82rem;
+  color: var(--color-text2);
+  margin: 6px 0;
+}
+
+.competitor-card .card-hours summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.competitor-card .card-hours div {
+  padding: 2px 0 0 12px;
+}
+
+.competitor-card .card-links {
+  display: flex;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.competitor-card .card-link {
+  display: inline-block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-accent);
+}
+
+/* On narrow screens, keep the detail card from covering the whole map */
+@media only screen and (max-width: 900px) {
+  .competitor-card {
+    width: calc(100% - 32px);
+  }
+}
