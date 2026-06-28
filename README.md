@@ -12,8 +12,13 @@ competitors appear as pins on Google's photoreal 3D globe, ranked with **ratings
 reviews and rich detail cards**. A **Gemini** agent drives it, talking to **Google
 Places** through the **Model Context Protocol**.
 
+### [▶ Try the live demo](https://agricidaniel.github.io/local-competitor-map/)
+
+<sub>Bring your own Gemini and Google Maps keys; they stay in your browser.</sub>
+
 <br/>
 
+[![Live demo](https://img.shields.io/badge/Live-Demo-2ea44f?logo=github&logoColor=white)](https://agricidaniel.github.io/local-competitor-map/)
 [![CI](https://github.com/AgriciDaniel/local-competitor-map/actions/workflows/ci.yml/badge.svg)](https://github.com/AgriciDaniel/local-competitor-map/actions/workflows/ci.yml)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)

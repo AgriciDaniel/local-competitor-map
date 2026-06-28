@@ -1088,6 +1088,7 @@ code.hljs {
   cursor: pointer;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   white-space: nowrap;
+  text-decoration: none;
 }
 
 .map-toggle:hover {
