@@ -28,7 +28,11 @@
   "bugs": {
     "url": "https://github.com/AgriciDaniel/local-competitor-map/issues"
   },
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
+    "prepare": "node -e \"const fs=require('fs');fs.existsSync('runtime-keys.ts')||fs.copyFileSync('runtime-keys.example.ts','runtime-keys.ts')\"",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",

@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: "If you use this project, please cite it as below."
+title: "Local Competitor Map: AI-powered local-competitor intelligence on a photorealistic 3D map"
+abstract: >-
+  A web app that turns a plain-English question into a map of local competitors. A
+  Gemini agent calls the Google Places API through the Model Context Protocol, plots
+  the competitive set as pins on a photorealistic Google 3D map, and opens a
+  Maps-style detail card on click, with an in-chat results list and a declutter filter.
+type: software
+authors:
+  - family-names: Agrici
+    given-names: Daniel
+    alias: AgriciDaniel
+version: 0.1.0
+date-released: 2026-06-28
+license: Apache-2.0
+url: "https://github.com/AgriciDaniel/local-competitor-map"
+keywords:
+  - google-maps
+  - photorealistic-3d
+  - gemini
+  - places-api
+  - local-seo
+  - competitor-analysis
+  - model-context-protocol

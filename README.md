@@ -14,6 +14,7 @@ Places** through the **Model Context Protocol**.
 
 <br/>
 
+[![CI](https://github.com/AgriciDaniel/local-competitor-map/actions/workflows/ci.yml/badge.svg)](https://github.com/AgriciDaniel/local-competitor-map/actions/workflows/ci.yml)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Vite](https://img.shields.io/badge/Vite-6-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)

@@ -1,0 +1,27 @@
+name: ci
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+      - name: Install
+        run: npm ci
+      - name: Seed runtime keys (empty, for build only)
+        run: cp runtime-keys.example.ts runtime-keys.ts
+      - name: Type-check
+        run: npm run typecheck
+      - name: Build
+        run: npm run build

@@ -1,0 +1,12 @@
+Local Competitor Map
+Copyright 2026 Daniel Agrici
+
+Licensed under the Apache License, Version 2.0 (see LICENSE).
+
+This product builds on Google AI Studio's "mcp_maps_3d" sample, also licensed
+under the Apache License, Version 2.0.
+
+It uses the following third-party services and libraries, each under its own
+license: Google Maps Platform (Maps JavaScript API, Places API), the Gemini API
+via @google/genai, @modelcontextprotocol/sdk, Lit, Vite, marked, marked-highlight,
+highlight.js, and zod.
