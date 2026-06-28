@@ -1,7 +1,6 @@
 <div align="center">
 
-<!-- TODO: replace with your logo/banner image -->
-<img src="assets/banner.png" alt="Local Competitor Map" width="820" />
+<img src="assets/banner.webp" alt="Local Competitor Map" width="900" />
 
 # 🗺️ Local Competitor Map
 
@@ -27,9 +26,6 @@ Places** through the **Model Context Protocol**.
 [![Gemini](https://img.shields.io/badge/Gemini-2.5%20Flash-8E75B2?logo=googlegemini&logoColor=white)](https://ai.google.dev/)
 [![Google Maps](https://img.shields.io/badge/Google%20Maps-Photorealistic%203D-4285F4?logo=googlemaps&logoColor=white)](https://developers.google.com/maps/documentation/javascript/3d-maps-overview)
 
-<!-- TODO: replace with a demo GIF -->
-<img src="assets/demo.gif" alt="Demo" width="820" />
-
 </div>
 
 ---
@@ -52,11 +48,9 @@ conversational Gemini agent runs the whole flow.
 
 ## 📸 Screenshots
 
-<!-- TODO: drop your images into assets/ and they render here -->
-
-| Competitor search | Detail card | Declutter filter |
-| :---: | :---: | :---: |
-| ![Search](assets/screenshot-search.png) | ![Detail](assets/screenshot-detail.png) | ![Clean](assets/screenshot-clean.png) |
+| Competitors plotted across the city | In-chat list and detail card |
+| :---: | :---: |
+| ![Competitors plotted across the city](assets/screenshot-results.webp) | ![In-chat list and detail card](assets/screenshot-detail.webp) |
 
 ---
 
