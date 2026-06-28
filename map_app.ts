@@ -198,6 +198,25 @@ export class MapApp extends LitElement {
   ): void {
     // Google Maps: Load the map when the component is first updated.
     this.loadMap();
+    // Greet first-time visitors who have no keys yet (e.g. the live demo).
+    this._maybeShowWelcome();
+  }
+
+  /**
+   * Shows a one-time welcome that guides bring-your-own-key visitors (the
+   * deployed demo) to add their keys. Skipped when keys are already configured.
+   */
+  private async _maybeShowWelcome() {
+    const s = getSettings();
+    if (s.geminiKey && s.mapsKey) return;
+    await this._addSystemMessage(
+      '👋 **Welcome to the Local Competitor Map demo.**\n\n' +
+        'To try it, open the **Settings** tab and add your own **Gemini** and ' +
+        '**Google Maps** API keys. They stay in your browser and are sent only ' +
+        "to Google's APIs.\n\n" +
+        'Then ask something like *"show me the top 10 plumbers in New York"*, or ' +
+        'run `/competitors Blue Bottle Coffee in San Francisco`.',
+    );
   }
 
   /**

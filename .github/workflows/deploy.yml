@@ -1,0 +1,56 @@
+name: Deploy to GitHub Pages
+
+# Builds the app with Vite and publishes dist/ to GitHub Pages, the same way the
+# rustacean site deploys. Requires the repo to be public (or a paid plan) and
+# Pages set to "GitHub Actions" as the source.
+#
+# Manual for now. Once the repo is public and Pages is enabled, add a push
+# trigger to auto-deploy on every commit (exactly like rustacean):
+#   on:
+#     push:
+#       branches: [main]
+#     workflow_dispatch:
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+      - name: Install
+        run: npm ci
+      - name: Seed runtime keys (empty, for build only)
+        run: cp runtime-keys.example.ts runtime-keys.ts
+      - name: Build
+        run: npm run build -- --base=/local-competitor-map/
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
