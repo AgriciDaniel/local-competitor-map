@@ -7,7 +7,7 @@
  * Lightweight, browser-local settings store for the app's API keys.
  *
  * Keys are persisted in `localStorage` only (client-side). This is fine for a
- * local developer tool, but it is NOT secure storage — do not ship this as-is
+ * local developer tool, but it is NOT secure storage. Do not ship this as-is
  * to untrusted users. The Gemini agent (index.tsx) and the map / Places
  * competitor search (map_app.ts) read their keys from here; an unset key falls
  * back to RUNTIME_KEYS (the gitignored local-demo keys in runtime-keys.ts).

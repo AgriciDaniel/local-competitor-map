@@ -4,7 +4,7 @@
  */
 
 /**
- * SHELVED — not currently imported anywhere. Kept for the planned local-SEO
+ * SHELVED: not currently imported anywhere. Kept for the planned local-SEO
  * ranking / geo-grid layer (true local-pack rank, which the Places-based
  * competitor search does not provide). Pairs with the dormant /api/dataforseo
  * proxy in vite.config.ts. Safe to delete if that layer is abandoned.

@@ -805,13 +805,13 @@ Open the Settings tab and add your Google Maps JavaScript API key
           c.rating != null
             ? `${c.rating}★${c.reviews != null ? ` (${c.reviews})` : ''}`
             : 'no rating';
-        return `- ${pos}**${c.name}** — ${rating}`;
+        return `- ${pos}**${c.name}** · ${rating}`;
       })
       .join('\n');
 
     const clientLine = r.client
       ? `\n\n**${r.client.name}** ${r.client.rank ? `appears at position **#${r.client.rank}**` : 'appears'} for "${r.keyword}"${where}.`
-      : `\n\n_Client not matched in the results — showing the competitive set for "${r.keyword}"._`;
+      : `\n\n_Client not matched in the results, showing the competitive set for "${r.keyword}"._`;
 
     return `Found **${n}** businesses${where} for "${r.keyword}".${clientLine}\n\nTop results (Google Maps relevance order):\n${top}\n\n_Click any pin or list row for details._`;
   }
@@ -886,7 +886,7 @@ Open the Settings tab and add your Google Maps JavaScript API key
       case '/help':
         await this._addSystemMessage(
           '**Commands**\n' +
-            '- `/competitors <business> in <city> [for <keyword>]` — plot a business\'s local competitors on the 3D map.\n' +
+            '- `/competitors <business> in <city> [for <keyword>]`: plots a business\'s local competitors on the 3D map.\n' +
             '- Otherwise just chat naturally to explore the map.',
         );
         return;
@@ -1272,7 +1272,7 @@ Open the Settings tab and add your Google Maps JavaScript API key
                       })}
                       title="Show on map"
                       @click=${() => this._selectCompetitor(c)}>
-                      <span class="rank">${c.rank ?? '–'}</span>
+                      <span class="rank">${c.rank ?? '·'}</span>
                       <span class="cinfo">
                         <span class="cname"
                           >${c.isClient ? '★ ' : ''}${c.name}</span
@@ -1280,7 +1280,7 @@ Open the Settings tab and add your Google Maps JavaScript API key
                         <span class="cmeta"
                           >${c.rating != null
                             ? `${c.rating}★`
-                            : '—'}${c.reviews != null
+                            : 'No rating'}${c.reviews != null
                             ? ` · ${c.reviews} reviews`
                             : ''}${c.businessStatus === 'CLOSED_TEMPORARILY'
                             ? ' · temporarily closed'
@@ -1399,7 +1399,7 @@ Open the Settings tab and add your Google Maps JavaScript API key
                 : ''}
             </div>
             <p class="settings-hint">
-              Stored locally in your browser (localStorage) — sent only to
+              Stored locally in your browser (localStorage). Sent only to
               Google's APIs. Used by the Gemini agent, the map, and the
               <code>/competitors</code> command. Leave blank to use the keys from
               <code>runtime-keys.ts</code>. Changing the Maps key reloads the page.

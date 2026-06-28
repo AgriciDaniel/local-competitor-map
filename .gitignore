@@ -17,7 +17,7 @@ dist-ssr
 # Local-only generated secrets (real API keys for the demo)
 runtime-keys.ts
 
-# Build/export archives (never commit — may embed env files)
+# Build/export archives (never commit; may embed env files)
 *.zip
 
 # Editor directories and files

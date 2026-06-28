@@ -22,7 +22,7 @@ See the [README](README.md#-configuration) for which Google APIs each key needs.
 - **Match the surrounding style:** this is a small, dependency-light TypeScript + Lit
   codebase. Keep new code consistent with the existing comment density and idioms.
 - **Keep keys client-side:** credentials are resolved at runtime via the Settings tab
-  or `runtime-keys.ts` — don't reintroduce build-time secret injection.
+  or `runtime-keys.ts`. Don't reintroduce build-time secret injection.
 
 ## Reporting bugs / requesting features
 

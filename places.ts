@@ -7,13 +7,13 @@
  * Local-competitor discovery via the Google Maps **Places** library (New).
  *
  * This runs entirely client-side using `google.maps.places.Place.searchByText`,
- * authenticated by the already-loaded Maps JS API key — so there is no separate
+ * authenticated by the already-loaded Maps JS API key, so there is no separate
  * key, no proxy and no CORS to manage. Given a client (business) and a location,
  * it returns the businesses Google surfaces for that category/area, with the
  * ratings, reviews, address, photos, hours, website and phone needed to plot
  * pins and render Maps-style detail cards. The client is flagged when matched.
  *
- * NOTE: Places returns results in Google's relevance/popularity order — that is
+ * NOTE: Places returns results in Google's relevance/popularity order, which is
  * a useful proxy for "who shows up", but it is NOT a tracked local-SEO rank.
  * True local-pack rank / geo-grid tracking is a future layer (DataForSEO).
  */
