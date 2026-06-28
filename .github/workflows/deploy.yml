@@ -3,14 +3,9 @@ name: Deploy to GitHub Pages
 # Builds the app with Vite and publishes dist/ to GitHub Pages, the same way the
 # rustacean site deploys. Requires the repo to be public (or a paid plan) and
 # Pages set to "GitHub Actions" as the source.
-#
-# Manual for now. Once the repo is public and Pages is enabled, add a push
-# trigger to auto-deploy on every commit (exactly like rustacean):
-#   on:
-#     push:
-#       branches: [main]
-#     workflow_dispatch:
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
