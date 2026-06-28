@@ -138,6 +138,9 @@ export class MapApp extends LitElement {
   // When true, the base map uses SATELLITE mode (no Google place labels), so
   // only our competitor pins are visible. False = HYBRID (labels on).
   @state() cleanMap = false;
+  // UI theme. Flipping it sets color-scheme on <html>, which switches every
+  // light-dark() CSS value across the app.
+  @state() theme: 'light' | 'dark' = 'light';
 
   // Settings form fields (mirrored to localStorage on save).
   @state() private sGeminiKey = '';
@@ -191,6 +194,48 @@ export class MapApp extends LitElement {
 
   createRenderRoot() {
     return this;
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    this._initTheme();
+  }
+
+  /** Loads the saved theme, or falls back to the OS preference. */
+  private _initTheme() {
+    let stored: string | null = null;
+    try {
+      stored = localStorage.getItem('mcpMaps3d.theme');
+    } catch (e) {
+      // localStorage unavailable; fall through to OS preference.
+    }
+    const prefersDark =
+      typeof window !== 'undefined' &&
+      window.matchMedia &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches;
+    this.theme =
+      stored === 'light' || stored === 'dark'
+        ? stored
+        : prefersDark
+          ? 'dark'
+          : 'light';
+    this._applyTheme(this.theme);
+  }
+
+  /** Applies the theme by setting color-scheme on the document root. */
+  private _applyTheme(theme: 'light' | 'dark') {
+    document.documentElement.style.colorScheme = theme;
+  }
+
+  /** Toggles light/dark and persists the choice. */
+  private _toggleTheme() {
+    this.theme = this.theme === 'dark' ? 'light' : 'dark';
+    try {
+      localStorage.setItem('mcpMaps3d.theme', this.theme);
+    } catch (e) {
+      // Non-fatal: theme still applies for this session.
+    }
+    this._applyTheme(this.theme);
   }
 
   protected firstUpdated(
@@ -1130,7 +1175,17 @@ Open the Settings tab and add your Google Maps JavaScript API key
           default-ui-disabled="true"
           role="application">
         </gmp-map-3d>
+        ${!this.mapInitialized
+          ? html`<div class="map-backdrop" aria-hidden="true"></div>`
+          : ''}
         <div class="map-controls">
+          <button
+            class="map-toggle icon"
+            @click=${() => this._toggleTheme()}
+            title="Toggle light / dark theme"
+            aria-label="Toggle light or dark theme">
+            ${this.theme === 'dark' ? '☀️' : '🌙'}
+          </button>
           <button
             class=${classMap({'map-toggle': true, 'active': this.cleanMap})}
             @click=${() => this._toggleCleanMap()}

@@ -24,6 +24,9 @@ html {
   height: 100%;
   display: flex;
   font-family: 'Google Sans Text', 'Google Sans';
+  /* Enables light-dark() and follows the OS by default. The theme toggle
+     overrides this with an explicit "light" or "dark" via an inline style. */
+  color-scheme: light dark;
 }
 
 body {
@@ -249,7 +252,89 @@ textarea {
   flex-grow: 1;
   height: 100%;
   width: 100%;
-  background-color: #e0e0e0;
+  background-color: light-dark(#e0e0e0, #0a0f1a);
+}
+
+/* Animated backdrop shown while the map is not ready (no key, or loading), so
+   the demo looks alive instead of a flat error. Pure CSS, no key required. */
+.map-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      1200px 620px at 50% 118%,
+      light-dark(#bcd8ff, #103a6b),
+      transparent 70%
+    ),
+    linear-gradient(
+      180deg,
+      light-dark(#eef4ff, #050a16),
+      light-dark(#dde9ff, #0a1430)
+    );
+}
+
+.map-backdrop::before {
+  content: '';
+  position: absolute;
+  inset: -25%;
+  background-image:
+    linear-gradient(
+      light-dark(rgba(40, 90, 170, 0.18), rgba(120, 170, 255, 0.12)) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      light-dark(rgba(40, 90, 170, 0.18), rgba(120, 170, 255, 0.12)) 1px,
+      transparent 1px
+    );
+  background-size: 56px 56px, 56px 56px;
+  transform: perspective(620px) rotateX(62deg);
+  transform-origin: 50% 100%;
+  animation: backdropGrid 70s linear infinite;
+}
+
+.map-backdrop::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 62%;
+  width: 62vmax;
+  height: 62vmax;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    light-dark(rgba(90, 150, 255, 0.28), rgba(60, 130, 255, 0.22)),
+    transparent 60%
+  );
+  filter: blur(26px);
+  animation: backdropGlow 26s ease-in-out infinite alternate;
+}
+
+@keyframes backdropGrid {
+  from {
+    background-position: 0 0, 0 0;
+  }
+  to {
+    background-position: 0 560px, 560px 0;
+  }
+}
+
+@keyframes backdropGlow {
+  from {
+    transform: translate(-56%, -46%) scale(1);
+  }
+  to {
+    transform: translate(-44%, -56%) scale(1.18);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .map-backdrop::before,
+  .map-backdrop::after {
+    animation: none;
+  }
 }
 
 .map-error-message {
@@ -257,11 +342,16 @@ textarea {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: rgba(0,0,0,0.7);
-  color: white;
-  padding: 20px;
-  border-radius: 8px;
+  max-width: min(440px, calc(100% - 32px));
+  background: light-dark(rgba(255, 255, 255, 0.82), rgba(10, 16, 30, 0.78));
+  color: var(--color-text);
+  border: 1px solid var(--color-sidebar-border);
+  backdrop-filter: blur(8px);
+  padding: 20px 22px;
+  border-radius: 12px;
   text-align: center;
+  line-height: 1.5;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
   z-index: 1000;
 }
 
@@ -1008,6 +1098,15 @@ code.hljs {
   background: var(--color-accent);
   color: var(--color-accent-text);
   border-color: var(--color-accent);
+}
+
+/* Square icon-only variant (theme toggle). */
+.map-toggle.icon {
+  padding: 0;
+  width: 38px;
+  height: 38px;
+  justify-content: center;
+  font-size: 1rem;
 }
 
 /* Ranked competitor list panel (top-left over the map) */
