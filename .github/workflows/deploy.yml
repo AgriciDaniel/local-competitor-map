@@ -35,7 +35,7 @@ jobs:
       - name: Build
         run: npm run build -- --base=/local-competitor-map/
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: dist
 
